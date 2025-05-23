@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import uuid
 
 class CustomUser(AbstractUser):
-    student_id = models.CharField(primary_key=True, max_length=8, verbose_name="学籍番号") # 必須入力
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID")
+    student_id = models.CharField(max_length=8, unique=True, blank=False, null=False, verbose_name="学籍番号") # 必須入力
     first_name = models.CharField(max_length=60, blank=False, null=False, verbose_name="名") # 必須入力
     last_name = models.CharField(max_length=60, blank=False, null=False, verbose_name="姓") # 必須入力
     email = models.EmailField(unique=True, blank=True, null=True, verbose_name="メールアドレス") # 任意入力
